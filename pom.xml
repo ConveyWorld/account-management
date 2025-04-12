@@ -31,16 +31,18 @@
         <grpc.version>1.70.0</grpc.version>
         <protobuf-java.version>3.25.6</protobuf-java.version>
         <spring-grpc.version>0.6.0</spring-grpc.version>
+        <oracle.version>23.6.0.24.10</oracle.version>
+        <hiraki.version>6.2.1</hiraki.version>
         <os.detected.classifier>osx-aarch_64</os.detected.classifier>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -61,11 +63,6 @@
                     <artifactId>grpc-netty-shaded</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.google.protobuf</groupId>
-            <artifactId>protobuf-java</artifactId>
-            <version>3.24.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.protobuf</groupId>
@@ -91,7 +88,12 @@
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc11</artifactId>
-            <scope>runtime</scope>
+            <version>${oracle.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${hiraki.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

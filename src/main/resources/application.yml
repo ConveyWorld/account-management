@@ -5,24 +5,23 @@ grpc:
   server:
     port: 3100
 
-spring:
-  application:
-    name: account-management
-
-  datasource:
-    url: jdbc:oracle:thin:@//localhost:11521/XE
+database:
+  primary:
+    url: jdbc:oracle:thin:@//localhost:1521/XE
     username: root
     password: 123456
-    driver-class-name: oracle.jdbc.OracleDriver
-    hikari:
-      minimum-idle: 5
-      maximum-pool-size: 20
-      idle-timeout: 30000
-      max-lifetime: 2000000
-      connection-timeout: 30000
-      pool-name: HikariPoolAccount
+    timeout: 60000
+    maximum-pool-size: 10
+spring:
   jpa:
     database-platform: org.hibernate.dialect.OracleDialect
-    hibernate:
-      ddl-auto: create
-
+#    hibernate:
+#      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE
