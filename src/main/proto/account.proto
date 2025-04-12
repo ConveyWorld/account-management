@@ -4,12 +4,16 @@ package com.account;
 option java_multiple_files = true;
 
 service AccountManagementService {
-  rpc CreateAccount (AccountRequest) returns (AccountResponse);
-  rpc GetAccount (AccountRequest) returns (AccountResponse);
-  rpc UpdateAccount (AccountRequest) returns (AccountResponse);
-  rpc DeleteAccount (AccountRequest) returns (AccountResponse);
+  rpc createAccount (AccountRequest) returns (AccountResponse);
+  rpc getAccount (AccountRequest) returns (AccountResponse);
+  rpc updateAccount (AccountRequest) returns (AccountResponse);
+  rpc deleteAccount (AccountRequest) returns (AccountResponse);
+  rpc findAllAccounts (AccountRequest) returns (AllAccountsResponse);
 }
 
+message AllAccountsResponse {
+  repeated AccountResponse accounts = 1;
+}
 message AccountRequest {
   string accountId = 1;
   string name = 2;
