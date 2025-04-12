@@ -1,0 +1,33 @@
+syntax = "proto3";
+package com.account;
+
+option java_multiple_files = true;
+
+service AccountManagementService {
+  rpc CreateAccount (AccountRequest) returns (AccountResponse);
+  rpc GetAccount (AccountRequest) returns (AccountResponse);
+  rpc UpdateAccount (AccountRequest) returns (AccountResponse);
+  rpc DeleteAccount (AccountRequest) returns (AccountResponse);
+}
+
+message AccountRequest {
+  string accountId = 1;
+  string name = 2;
+  string accountType = 3;
+  double balance = 4;
+  string phoneNumber = 5;
+  string email = 6;
+  string address = 7;
+  string accountStatus = 8; // e.g., "ACTIVE", "INACTIVE"
+}
+message AccountResponse {
+  string accountId = 1;
+  string name = 2;
+  string accountType = 3;
+  double balance = 4;
+  string phoneNumber = 5;
+  string email = 6;
+  string address = 7;
+  string accountStatus = 8; // e.g., "ACTIVE", "INACTIVE"
+  string status = 9; // e.g., "SUCCESS", "FAILURE"
+}

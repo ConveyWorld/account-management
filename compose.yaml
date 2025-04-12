@@ -1,7 +1,13 @@
 services:
   oracle:
     image: 'gvenzl/oracle-free:latest'
+    container_name: oracle-db
     environment:
-      - 'ORACLE_PASSWORD=secret'
+      - ORACLE_DATABASE=XE
+      - ORACLE_USER=root
+      - ORACLE_PASSWORD=123456
+      - ORACLE_ALLOW_REMOTE=true
+    volumes:
+      - /Users/dathx/Documents/Banking/Docker/orcale:/opt/oracle/oradata
     ports:
-      - '1521'
+      - "1521:1521"
