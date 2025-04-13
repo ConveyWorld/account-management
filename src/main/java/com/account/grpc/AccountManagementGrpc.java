@@ -5,6 +5,7 @@ import com.account.AccountRequest;
 import com.account.AccountResponse;
 import com.account.AllAccountsResponse;
 import com.account.service.impl.AccountManagementService;
+import com.account.virtual_thread.VirtualThreadExecutor;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -14,15 +15,16 @@ import net.devh.boot.grpc.server.service.GrpcService;
 public class AccountManagementGrpc  extends AccountManagementServiceGrpc.AccountManagementServiceImplBase {
 
     private final AccountManagementService accountManagementService;
+    private final VirtualThreadExecutor virtualThreadExecutor;
 
     @Override
     public void createAccount(AccountRequest request, StreamObserver<AccountResponse> responseObserver) {
-        accountManagementService.createAccount(request, responseObserver);
+        virtualThreadExecutor.executeInVirtualThread("thread: ", ()-> accountManagementService.createAccount(request, responseObserver));
     }
 
     @Override
     public void getAccount(AccountRequest request, StreamObserver<AccountResponse> responseObserver) {
-        accountManagementService.getAccount(request, responseObserver);
+        virtualThreadExecutor.executeInVirtualThread("thread: ", () ->accountManagementService.getAccount(request, responseObserver));
     }
 
     @Override
@@ -32,11 +34,11 @@ public class AccountManagementGrpc  extends AccountManagementServiceGrpc.Account
 
     @Override
     public void deleteAccount(AccountRequest request, StreamObserver<AccountResponse> responseObserver) {
-        accountManagementService.deleteAccount(request, responseObserver);
+        virtualThreadExecutor.executeInVirtualThread("thread: ", ()-> accountManagementService.deleteAccount(request, responseObserver));
     }
 
     @Override
     public void findAllAccounts(AccountRequest request, StreamObserver<AllAccountsResponse> responseObserver) {
-        accountManagementService.findAllAccounts(request, responseObserver);
+        virtualThreadExecutor.executeInVirtualThread("thread: ", () -> accountManagementService.findAllAccounts(request, responseObserver));
     }
 }

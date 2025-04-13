@@ -5,6 +5,7 @@ import com.account.AccountResponse;
 import com.account.AllAccountsResponse;
 import com.account.entity.Account;
 import com.account.repository.AccountRepository;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -54,20 +55,20 @@ public class AccountManagementService {
 
     private static boolean validateRequest(AccountRequest request, StreamObserver<AccountResponse> responseObserver) {
         if (request.getAccountId().isEmpty()) {
-            responseObserver.onError(new IllegalArgumentException("Account ID cannot be null or empty"));
+            responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Account Id cannot be empty").asRuntimeException());
             return true;
         }
 
         if (request.getName().isEmpty()) {
-            responseObserver.onError(new IllegalArgumentException("Name cannot be null or empty"));
+            responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Name cannot be empty").asRuntimeException());
             return true;
         }
         if (request.getAccountType().isEmpty()) {
-            responseObserver.onError(new IllegalArgumentException("Account Type cannot be null or empty"));
+            responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Account Type cannot be empty").asRuntimeException());
             return true;
         }
         if (request.getBalance() <= 0) {
-            responseObserver.onError(new IllegalArgumentException("Balance must be greater than 0"));
+            responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Balance should not less then or equals to zero!").asRuntimeException());
             return true;
         }
         return false;
@@ -131,7 +132,7 @@ public class AccountManagementService {
                             .setAccountStatus(acc.getAccountStatus())
                             .setAddress(acc.getAddress())
                             .build()).toList();
-            
+
             AllAccountsResponse response = AllAccountsResponse.newBuilder()
                     .addAllAccounts(accountList)
                     .build();
